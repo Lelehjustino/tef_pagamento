@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:pagamento/controllers/teste_tef_controller.dart';
-import 'package:pagamento/tef/mock/mock_tef_gateway.dart';
+import 'package:pagamento/tef/mock/cli_si_tef_gateway.dart';
 import 'package:pagamento/tef/models/tef_modalidade.dart';
 import 'package:pagamento/tef/models/tef_status.dart';
 
@@ -18,7 +18,7 @@ class TesteTefPage extends StatefulWidget {
 
 class _TesteTefPageState extends State<TesteTefPage> {
   final TesteTefController controller = Get.find<TesteTefController>();
-  final MockTefGateway tef = MockTefGateway();
+  final CliSiTefGateway tef = CliSiTefGateway();
 
   StreamSubscription<TefStatus>? _subscription;
 
@@ -79,7 +79,7 @@ class _TesteTefPageState extends State<TesteTefPage> {
               final status = controller.status.value;
 
               final podeCancelar =
-                  status == TefStatus.iniciando ||
+                  status == TefStatus.ocioso ||
                   status == TefStatus.aguardandoCartao ||
                   status == TefStatus.cartaoDetectado ||
                   status == TefStatus.solicitandoSenha ||
@@ -100,7 +100,7 @@ class _TesteTefPageState extends State<TesteTefPage> {
                     await Future.delayed(
                       const Duration(seconds: 3),
                     );
-                    controller.status.value = TefStatus.iniciando;
+                    controller.status.value = TefStatus.ocioso;
                     controller.mensagemStatus.value = '';
                   },
                   child: Text('CANCELAR'),

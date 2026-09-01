@@ -1,15 +1,15 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:pagamento/tef/mock/mock_tef_gateway.dart';
+import 'package:pagamento/tef/mock/cli_si_tef_gateway.dart';
 import 'package:pagamento/tef/models/tef_modalidade.dart';
 import 'package:pagamento/tef/models/tef_status.dart';
 
 class TesteTefController extends GetxController {
-  final MockTefGateway tef = MockTefGateway();
+  final CliSiTefGateway tef = CliSiTefGateway();
 
   final RxString mensagemStatus = ''.obs;
 
-  final Rx<TefStatus> status = TefStatus.iniciando.obs;
+  final Rx<TefStatus> status = TefStatus.ocioso.obs;
 
   @override
   void onInit() {
@@ -33,7 +33,7 @@ class TesteTefController extends GetxController {
     status.value = novoStatus;
 
     switch (novoStatus) {
-      case TefStatus.iniciando:
+      case TefStatus.ocioso:
         mensagemStatus.value = 'Iniciando pagamento...';
 
       case TefStatus.aguardandoCartao:

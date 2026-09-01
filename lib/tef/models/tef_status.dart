@@ -1,5 +1,5 @@
 enum TefStatus {
-  iniciando,
+  ocioso,
   aguardandoCartao,
   cartaoDetectado,
   solicitandoSenha,

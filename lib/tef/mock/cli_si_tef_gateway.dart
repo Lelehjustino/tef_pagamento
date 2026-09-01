@@ -5,10 +5,10 @@ import 'package:pagamento/tef/models/tef_result.dart';
 import 'package:pagamento/tef/models/tef_status.dart';
 import 'package:pagamento/tef/tef_gateway.dart';
 
-class MockTefGateway implements TefGateway {
+class CliSiTefGateway implements TefGateway {
   final StreamController<TefStatus> _statusController = StreamController<TefStatus>.broadcast();
 
-  TefStatus _status = TefStatus.iniciando;
+  TefStatus _status = TefStatus.ocioso;
 
   Timer? _timer;
 
@@ -67,7 +67,7 @@ class MockTefGateway implements TefGateway {
     required Completer<TefResult> completer,
   }) async {
     try {
-      _setStatus(TefStatus.iniciando);
+      _setStatus(TefStatus.ocioso);
 
       await Future.delayed(
         const Duration(seconds: 1),
